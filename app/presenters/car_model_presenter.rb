@@ -7,7 +7,7 @@ class CarModelPresenter < SimpleDelegator
 
   def car_options
     content_tag :ul do
-    __getobj__.car_options.each do |option|
+    obj.car_options.each do |option|
         concat(content_tag(:li, option))
       end
     end

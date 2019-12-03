@@ -17,6 +17,5 @@ describe RentalHelper do
 
       expect(result).to eq('<span class="badge badge-success">finalizada</span>')
     end
-
   end
 end
