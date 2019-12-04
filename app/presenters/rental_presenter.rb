@@ -1,11 +1,12 @@
 class RentalPresenter < SimpleDelegator
-  attr_reader :current_user
+  attr_reader :current_user, :authorizer
   include Rails.application.routes.url_helpers
   delegate :content_tag, :link_to, to: :helper
 
-  def initialize(rental, user)
+  def initialize(rental, user = NilUser.new, authorizer = RentalActionPolicy)
     super(rental)
     @current_user = user
+    @authorizer = authorizer
   end
 
   def status_badge
@@ -15,6 +16,7 @@ class RentalPresenter < SimpleDelegator
   end
 
   def current_action
+    return '' unless authorizer.new(__getobj__, current_user).authorized?
     if scheduled?
       link_to 'Iniciar Locação', review_rental_path(id)
     elsif ongoing?
@@ -24,7 +26,7 @@ class RentalPresenter < SimpleDelegator
     elsif finalized? && current_user.admin?
       link_to 'Reportar Problema', report_rental_path(id)
     else 
-      return ""
+      ''
     end
   end
 

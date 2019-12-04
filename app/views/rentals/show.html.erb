@@ -12,6 +12,6 @@
 <p><%= Rental.human_attribute_name('category') %>: <%= @rental.category.name  %>
 <p><%= Rental.human_attribute_name('price_projection') %>: <%= number_to_currency(@rental.calculate_price_projection) %>
 
-<% if current_user.admin? || current_user.subsidiary == @rental.subsidiary %>
+
   <%= @rental.current_action %>
-<% end %>
+
