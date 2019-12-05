@@ -12,10 +12,7 @@ class RentalsController < ApplicationController
   end
 
   def create
-    @rental = Rental.new(rental_params)
-    subsidiary = current_subsidiary
-    @rental.subsidiary = subsidiary
-    @rental.status = :scheduled
+    @rental = RentalBuilder.new(rental_params, current_subsidiary).build
     if @rental.save
       redirect_to rental_path(@rental.id)
     else

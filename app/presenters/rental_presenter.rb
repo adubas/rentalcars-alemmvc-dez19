@@ -3,9 +3,9 @@ class RentalPresenter < SimpleDelegator
   include Rails.application.routes.url_helpers
   delegate :content_tag, :link_to, to: :helper
 
-  def initialize(rental, user = NilUser.new, authorizer = RentalActionPolicy)
+  def initialize(rental, user, authorizer = RentalActionPolicy)
     super(rental)
-    @current_user = user
+    @current_user = user || NilUser.new
     @authorizer = authorizer
   end
 

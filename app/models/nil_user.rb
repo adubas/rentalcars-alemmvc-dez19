@@ -1,4 +1,5 @@
 class NilUser
+  
   def admin?
     false
   end

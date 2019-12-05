@@ -100,7 +100,7 @@ describe RentalPresenter do
     end
 
     context 'nil user' do
-      it 'should not return start rental' do
+      it 'should not return rental action' do
         subsidiary = create(:subsidiary, name: 'Almeida Motors')
         category = create(:category, name: 'A', daily_rate: 10, car_insurance: 20,
                           third_party_insurance: 20)
@@ -111,7 +111,7 @@ describe RentalPresenter do
         rental = create(:rental, category: category, subsidiary: subsidiary,
                         start_date: '3000-01-08', end_date: '3000-01-10',
                         status: :scheduled)
-        result = RentalPresenter.new(rental).current_action
+        result = RentalPresenter.new(rental, nil).current_action
 
         expect(result).to eq("")
       end

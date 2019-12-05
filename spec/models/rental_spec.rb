@@ -6,8 +6,9 @@ RSpec.describe Rental, type: :model do
   context '#generate_random_token' do
     it 'should generate a random reservation code' do
       rental = build(:rental)
+      allow(TokenGenerator).to receive(:generate).and_return('AB341Q')
 
-      expect(rental.send(:generate_random_token)).to match(/[0-9A-Z]{6}/)
+      expect(TokenGenerator.generate).to match(/[0-9A-Z]{6}/)
     end
   end
 
@@ -53,7 +54,7 @@ RSpec.describe Rental, type: :model do
       rental = build(:rental, category: category, subsidiary: subsidiary,
                      client: customer, start_date: '3000-01-01',
                      end_date: '3000-01-03')
-      allow(rental).to receive(:generate_random_token)
+      allow(TokenGenerator).to receive(:generate)
         .and_return('ACB123', 'HDE123')
 
       rental.save!

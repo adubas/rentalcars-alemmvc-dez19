@@ -11,33 +11,25 @@ class CarModelsController < ApplicationController
 
   def new
     @car_model = CarModel.new
-    @manufactures = Manufacture.all
-    @fuel_types = FuelType.all
-    @categories = Category.all
+    load_all
   end
 
   def create
     @car_model = CarModel.new(car_model_params)
     return redirect_to @car_model if @car_model.save
 
-    @manufactures = Manufacture.all
-    @fuel_types = FuelType.all
-    @categories = Category.all
+    load_all
     render :new
   end
 
   def edit
     @car_model = CarModel.find(params[:id])
-    @manufactures = Manufacture.all
-    @fuel_types = FuelType.all
-    @categories = Category.all
+    load_all
   end
 
   def update
     @car_model = CarModel.find(params[:id])
-    @manufactures = Manufacture.all
-    @fuel_types = FuelType.all
-    @categories = Category.all
+    load_all
     if @car_model.update(car_model_params)
       redirect_to @car_model
     else
@@ -51,4 +43,9 @@ class CarModelsController < ApplicationController
     fuel_type_id category_id car_options photo])
   end
 
+  def load_all
+    @manufactures = Manufacture.all
+    @fuel_types = FuelType.all
+    @categories = Category.all
+  end
 end
